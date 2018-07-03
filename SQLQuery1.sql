@@ -35,7 +35,6 @@ create table Transporter(
 
 create table Calculation(
 	id int primary key identity,
-	[Sum] decimal not null,
 	[Date] datetime not null,
 	id_Cargo int not null,
 	id_Transporter int not null,
@@ -56,6 +55,8 @@ drop table Client;
 
 drop table Flight;
 
+drop table Cargo;
+
 alter table Flight
 	add FinalPath varchar(50) not null;
 
@@ -70,6 +71,9 @@ alter table Cargo
 
 alter table Client
 	alter column NumberPhone varchar(15) not null;
+
+alter table Cargo
+	add Freight decimal not null;
 
 ----- Insert to table--------
 insert into Client(FirstName, LastName, NumberPhone)values
@@ -92,13 +96,24 @@ insert into Flight values
 	(5, 'Italy', GETDATE());
 
 insert into Cargo values
-	(56.1, 'Glass'),
-	(56.1, 'Tree');
+	(56.1, 250, 'Glass'),
+	(100.5, 750, 'Tree');
 
-insert into Calculator ([sum], ) values 
+insert into Calculation values
+	(GETDATE(),1,1,1,1,1),
+	(GETDATE(),2,2,2,2,2);
 
 select * from Client;
 select * from Manager;
+select * from Transporter;
 select * from Flight;
+select * from Cargo;
+
+select Client.LastName as[Клиент] , Transporter.LastName as[Перевозчик], Cargo.[Type], Cargo.Freight, Manager.LastName as [Менеджер], Calculation.[Date] 
+from Calculation, Client, Transporter, Cargo, Manager
+where Calculation.id_Client = Client.id
+and		Calculation.id_Transporter = Transporter.id
+and		Calculation.id_Cargo = Cargo.id
+and		Calculation.id_Manager = Manager.id; 
 
 
